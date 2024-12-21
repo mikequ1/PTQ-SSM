@@ -4,6 +4,8 @@ This is the associated github repo for Post-Training Quantization for State-Spac
 
 Author: Mike Qu
 
+Transformer PTQ component of the project: https://github.com/yh-ng/hpmlProj_ptq
+
 ## Overview
 In this project, we study how post-training quantization techniques can be effectively applied to state-space models. We first expand on
 Mamba-PTQ’s work by experimentally examining which of Mamba’s submodules are more prone to quantization errors, and the effect of quantization schemes (e.g. per tensor vs. per channel) on model performance. Secondly, we introduce a
