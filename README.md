@@ -4,6 +4,18 @@ This is the associated github repo for Post-Training Quantization for State-Spac
 
 Author: Mike Qu
 
+## Overview
+In this project, we study how post-training quantization techniques can be effectively applied to state-space models. We first expand on
+Mamba-PTQ’s work by experimentally examining which of Mamba’s submodules are more prone to quantization errors, and the effect of quantization schemes (e.g. per tensor vs. per channel) on model performance. Secondly, we introduce a
+novel theoretical variance analysis to support Quamba’s find-
+ings, by rigorously showing that Hadamard-based quantization
+outperforms Smoothing-based quantization only when outliers
+in activations are significant. We also experimentally justify
+the theoretical results, by comparing the relative performance
+gain of using Hadamards over smoothing on Mamba and
+Transformer language models.
+
+
 ### Installing Dependencies
 ```
 pip3 install -r requirements.txt
@@ -99,4 +111,9 @@ python expts.py state-spaces/mamba-790m fake --do_hadamard --do_percentile_u --b
 python expts.py state-spaces/mamba-790m fake --do_smoothing --do_percentile_u --batch_size 16       # Smoothing expts
 ```
 
+## Overview of Results
+Through extensive experiments, we first identified critical submodules within each Mamba layer that are more sensitive to quantization. We highlighted that quantizing only the input and output projection layers has minimal impact on accuracy while greatly reducing the model footprint. Our findings also show that per-channel quantization significantly outperforms their per-tensor counterparts, particularly for smaller models, due to the non-uniform outlier distribution across channels. We further demonstrated the applicability of novel weight-only quantization techniques like GPTQ on these models.
 
+Our variance analysis further revealed the conditions under which Hadamard-based quantization outperforms smoothing approaches, with Hadamards being particularly well-suited for handling excessive outliers in weights or activations. Experimental results validated this insight, showing that Hadamards provide a greater margin of improvement in Mamba models compared to transformer architectures. 
+
+These results pave the way for further exploration of quantization techniques tailored specifically to the unique dynamics of Mamba and other state-space models.
